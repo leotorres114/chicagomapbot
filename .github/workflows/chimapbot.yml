@@ -2,7 +2,7 @@ name: chicagomapbot
 
 on:
   schedule:
-    - cron: '0/5 * * * *'  # once every hour (for now)
+    - cron: '15 0/1 * * *'  # once every hour in the 15th minute (for now)
 
 jobs:
   chicagomapbot-post:
