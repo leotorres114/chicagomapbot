@@ -16,6 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
+      - name: Install sf libraries on macOS
+        if: runner.os == 'macOS'
+        run: | 
+          brew install proj
+          brew install geos
+          brew install gdal
       - name: Install dependencies
         run: Rscript dependencies.R
       - name: Create and post tweet
