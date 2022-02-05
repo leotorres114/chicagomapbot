@@ -16,12 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
-      - name: Install sf libraries on macOS
+      - name: Install geo libraries
         if: runner.os == 'macOS'
         run: | 
           brew install proj
           brew install geos
           brew install gdal
+          brew install udunits
       - name: Install dependencies
         run: Rscript dependencies.R
       - name: Create and post tweet
