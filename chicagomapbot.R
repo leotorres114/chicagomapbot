@@ -1,8 +1,7 @@
 # twitter twoken
-chimapbot_token <- rtweet::create_token(
-  app = "chicagomapbot",
-  consumer_key = Sys.getenv("TWITTER_CONSUMER_API_KEY"),
-  consumer_secret = Sys.getenv("TWITTER_CONSUMER_API_SECRET"),
+chimapbot_token <- rtweet::rtweet_bot(
+  api_key = Sys.getenv("TWITTER_CONSUMER_API_KEY"),
+  api_secret = Sys.getenv("TWITTER_CONSUMER_API_SECRET"),
   access_token = Sys.getenv("TWITTER_ACCESS_TOKEN"),
   access_secret = Sys.getenv("TWITTER_ACCESS_TOKEN_SECRET")
 )
@@ -46,14 +45,17 @@ img_url <- paste0(
   Sys.getenv("MAPBOX_PUBLIC_ACCESS_TOKEN")
 )
 
-temp_file <- tempfile()
+temp_file <- tempfile(fileext = ".jpeg")
 download.file(img_url, temp_file)
 
 # Build the status message (text and URL)
 status <- paste0(lat,", ",lon,"\n",
                  "https://www.openstreetmap.org/#map=18/",lat,"/",lon,"/")
 
+alt_text <- "A satellite image of a random location in Chicago."
+
 # Post the image to Twitter
 rtweet::post_tweet(status = status,
                    media = temp_file,
+                   media_alt_text = alt_text,
                    token = chimapbot_token)
